@@ -1,0 +1,26 @@
+name: location_beacons_ios
+description: "iOS implementation of the location_beacons plugin."
+version: 0.0.1+1
+publish_to: none
+
+environment:
+  sdk: '>=3.2.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  location_beacons_platform_interface: 
+    path: ../location_beacons_platform_interface
+
+dev_dependencies:
+  flutter_lints: ^4.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  plugin:
+    implements: location_beacons
+    platforms:
+      ios:
+        pluginClass: LocationBeaconsPlugin
+        dartPluginClass: LocationBeaconsIOS

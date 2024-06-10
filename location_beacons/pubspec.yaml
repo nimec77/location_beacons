@@ -1,0 +1,29 @@
+name: location_beacons
+description: "Flutter package of the location beacons plugin."
+version: 0.0.1+1
+publish_to: none # Remove this line if you wish to publish to pub.dev
+
+environment:
+  sdk: '>=3.2.3 <4.0.0'
+  flutter: '>=3.3.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  location_beacons_platform_interface: 
+    path: ../location_beacons_platform_interface
+  location_beacons_android:
+    path: ../location_beacons_android
+  location_beacons_ios:
+    path: ../location_beacons_ios
+
+dev_dependencies:
+  flutter_lints: ^4.0.0
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        default_package: location_beacons_android
+      ios:
+        default_package: location_beacons_ios
