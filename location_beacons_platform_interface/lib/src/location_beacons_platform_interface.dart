@@ -1,7 +1,7 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'package:geolocator/geolocator.dart';
 
-abstract class LocationBeaconsPlatform extends PlatformInterface {
+abstract base class LocationBeaconsPlatform extends PlatformInterface {
   /// Constructs a LocationBeaconsPlatform.
   LocationBeaconsPlatform() : super(token: _token);
 
@@ -53,7 +53,7 @@ abstract class LocationBeaconsPlatform extends PlatformInterface {
         'getServiceStatusStream() has not been implemented.');
   }
 
-  Stream<Position> getPositionStream({LocationSettings? locationOptions}) {
+  Stream<Position> getPositionStream({LocationSettings? locationSettings}) {
     throw UnimplementedError('getPositionStream() has not been implemented.');
   }
 
@@ -107,4 +107,4 @@ abstract class LocationBeaconsPlatform extends PlatformInterface {
   }
 }
 
-class _PlaceholderImplementation extends LocationBeaconsPlatform {}
+final class _PlaceholderImplementation extends LocationBeaconsPlatform {}

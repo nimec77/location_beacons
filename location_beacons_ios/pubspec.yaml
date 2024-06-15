@@ -7,15 +7,21 @@ environment:
   sdk: '>=3.2.3 <4.0.0'
 
 dependencies:
+  baseflow_plugin_template: ^2.1.2
   flutter:
     sdk: flutter
+  geolocator_apple: ^2.3.7
   location_beacons_platform_interface: 
     path: ../location_beacons_platform_interface
+  url_launcher: ^6.3.0
 
 dev_dependencies:
+  async: ^2.11.0
   flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
+  mockito: ^5.4.4
+  plugin_platform_interface: ^2.1.8
 
 flutter:
   plugin:

@@ -1,8 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:location_beacons_platform_interface/location_beacons_platform_interface.dart';
-import 'package:mockito/mockito.dart';
-import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -12,26 +10,8 @@ void main() {
       expect(LocationBeaconsPlatform.instance, isA<LocationBeaconsPlatform>());
     });
 
-    test('Cannot be implemented with `implements`', () {
-      expect(() {
-        LocationBeaconsPlatform.instance = ImplementsLocationBeaconsPlatform();
-        // In versions of `package:plugin_platform_interface` prior to fixing
-        // https://github.com/flutter/flutter/issues/109339, an attempt to
-        // implement a platform interface using `implements` would sometimes
-        // throw a `NoSuchMethodError` and other times throw an
-        // `AssertionError`.  After the issue is fixed, an `AssertionError` will
-        // always be thrown.  For the purpose of this test, we don't really care
-        // what exception is thrown, so just allow any exception.
-      }, throwsA(anything));
-    });
-
     test('Can be extended', () {
       LocationBeaconsPlatform.instance = ExtendsLocationBeansPlatform();
-    });
-
-    test('Can be mocked with `implements`', () {
-      final mock = MockGeolocatorPlatform();
-      LocationBeaconsPlatform.instance = mock;
     });
 
     test(
@@ -330,16 +310,4 @@ void main() {
   });
 }
 
-class ImplementsLocationBeaconsPlatform implements LocationBeaconsPlatform {
-  @override
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
-}
-
-class MockGeolocatorPlatform extends Mock
-    with
-        // ignore: prefer_mixin
-        MockPlatformInterfaceMixin
-    implements
-        LocationBeaconsPlatform {}
-
-class ExtendsLocationBeansPlatform extends LocationBeaconsPlatform {}
+final class ExtendsLocationBeansPlatform extends LocationBeaconsPlatform {}
