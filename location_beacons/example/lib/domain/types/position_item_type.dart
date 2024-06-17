@@ -1,4 +1,7 @@
 enum PositionItemType {
   log,
-  position,
+  position;
+
+  bool get isLog => this == PositionItemType.log;
+  bool get isPosition => this == PositionItemType.position;
 }

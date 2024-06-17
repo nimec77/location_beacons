@@ -14,6 +14,8 @@ dependencies:
     path: ../
 
   cupertino_icons: ^1.0.2
+  baseflow_plugin_template: ^2.1.2
+  url_launcher: ^6.3.0
 
 dev_dependencies:
   integration_test:

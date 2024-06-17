@@ -8,8 +8,8 @@
 import Combine
 import CoreLocation
 
-typealias GeolocatorResult = CLLocation?
-typealias GeolocatorError = (ErrorCodes, String)
+typealias GeolocatorResult = (CLLocation?) -> Void
+typealias GeolocatorError = (ErrorCodes, String) -> Void
 
 class GeolocationHandler: NSObject, CLLocationManagerDelegate {
     private lazy var locationManager: CLLocationManager = {
@@ -19,19 +19,19 @@ class GeolocationHandler: NSObject, CLLocationManagerDelegate {
         return manager
     }()
     
-    private(set) var isListeningForPositionUpdates = false
+    private var isListeningForPositionUpdates = false
     
-    private(set) var errorHandler: GeolocatorError?
+    private var errorHandler: GeolocatorError? = nil
     
-    private(set) var currentLocationResultHandler: GeolocatorResult = nil
+    private var currentLocationResultHandler: GeolocatorResult? = nil
     
-    private(set) var listenerResultHandler: GeolocatorResult = nil
+    private var listenerResultHandler: GeolocatorResult? = nil
     
     func getLasKnownPosition() -> CLLocation? {
         return locationManager.location
     }
     
-    func requestPosition(resultHandler: GeolocatorResult, errorHandler: GeolocatorError) {
+    func requestPosition(resultHandler: @escaping GeolocatorResult, errorHandler: @escaping GeolocatorError) {
         self.currentLocationResultHandler = resultHandler
         self.errorHandler = errorHandler
         
@@ -41,7 +41,9 @@ class GeolocationHandler: NSObject, CLLocationManagerDelegate {
             showBackgroundLocationIndicator = locationManager.showsBackgroundLocationIndicator
             allowBackgroundLocationUpdates = locationManager.allowsBackgroundLocationUpdates
         }
-        startMonitoring(pauseLocationUpdatesAutomaticaly: false, activityType: CLActivityType.other , isListeningForPositionUpdates: isListeningForPositionUpdates, showBackgroundLocationIndicator: showBackgroundLocationIndicator, allowBackroundLocationUpdates: allowBackgroundLocationUpdates)
+        startMonitoring(pauseLocationUpdatesAutomatically: false, activityType: CLActivityType.other ,
+                        isListeningForPositionUpdates: isListeningForPositionUpdates, showBackgroundLocationIndicator: showBackgroundLocationIndicator,
+                        allowBackgroundLocationUpdates: allowBackgroundLocationUpdates)
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -52,13 +54,13 @@ class GeolocationHandler: NSObject, CLLocationManagerDelegate {
         guard let location = locations.last else { return }
         
         if (currentLocationResultHandler != nil) {
-            currentLocationResultHandler = location
+            currentLocationResultHandler!(location)
         }
         if (listenerResultHandler != nil) {
-            listenerResultHandler = location
+            listenerResultHandler!(location)
         }
         
-        
+        currentLocationResultHandler = nil
         if (!isListeningForPositionUpdates) {
             stopMonitoring()
         }
@@ -79,11 +81,22 @@ class GeolocationHandler: NSObject, CLLocationManagerDelegate {
             
         }
         
-        errorHandler = (ErrorCodes.GeolocatorErrorLocationUpdateFailure, error.localizedDescription)
+        if (errorHandler != nil) {
+            errorHandler!(ErrorCodes.GeolocatorErrorLocationUpdateFailure, error.localizedDescription)
+        }
+        
         currentLocationResultHandler = nil
         if (!isListeningForPositionUpdates) {
             stopMonitoring()
         }
+    }
+    
+    func startListening(pauseLocationUpdatesAutomatically: Bool, activityType: CLActivityType, showBackgroundLocationIndicator: Bool,
+                        allowBackgroundLocationUpdates: Bool, resultHandler: @escaping GeolocatorResult, errorHandler: @escaping GeolocatorError) {
+        self.errorHandler = errorHandler
+        self.listenerResultHandler = resultHandler
+        
+        startMonitoring(pauseLocationUpdatesAutomatically: pauseLocationUpdatesAutomatically, activityType: activityType, isListeningForPositionUpdates: true, showBackgroundLocationIndicator: showBackgroundLocationIndicator, allowBackgroundLocationUpdates: allowBackgroundLocationUpdates)
     }
     
     private func stopMonitoring() {
@@ -93,12 +106,12 @@ class GeolocationHandler: NSObject, CLLocationManagerDelegate {
         listenerResultHandler = nil
     }
     
-    private func startMonitoring(pauseLocationUpdatesAutomaticaly: Bool, activityType: CLActivityType, isListeningForPositionUpdates: Bool,
-                                showBackgroundLocationIndicator: Bool, allowBackroundLocationUpdates: Bool) {
+    private func startMonitoring(pauseLocationUpdatesAutomatically: Bool, activityType: CLActivityType, isListeningForPositionUpdates: Bool,
+                                 showBackgroundLocationIndicator: Bool, allowBackgroundLocationUpdates: Bool) {
         self.isListeningForPositionUpdates = isListeningForPositionUpdates
         locationManager.activityType = activityType
-        locationManager.pausesLocationUpdatesAutomatically = pauseLocationUpdatesAutomaticaly
-        locationManager.allowsBackgroundLocationUpdates = allowBackroundLocationUpdates
+        locationManager.pausesLocationUpdatesAutomatically = pauseLocationUpdatesAutomatically
+        locationManager.allowsBackgroundLocationUpdates = allowBackgroundLocationUpdates
         locationManager.showsBackgroundLocationIndicator = showBackgroundLocationIndicator
         
         locationManager.startMonitoringSignificantLocationChanges()

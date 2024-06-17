@@ -6,12 +6,15 @@ PODS:
     - Flutter
   - location_beacons_ios (0.0.1):
     - Flutter
+  - url_launcher_ios (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - location_beacons_ios (from `.symlinks/plugins/location_beacons_ios/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
@@ -22,12 +25,15 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
   location_beacons_ios:
     :path: ".symlinks/plugins/location_beacons_ios/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   geolocator_apple: 6cbaf322953988e009e5ecb481f07efece75c450
   integration_test: 13825b8a9334a850581300559b8839134b124670
   location_beacons_ios: bf7b0ac1759de0673dddd22315c844de5436e641
+  url_launcher_ios: bbd758c6e7f9fd7b5b1d4cde34d2b95fcce5e812
 
 PODFILE CHECKSUM: 70d9d25280d0dd177a5f637cdb0f0b0b12c6a189
 
