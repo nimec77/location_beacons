@@ -5,7 +5,7 @@
 //  Created by Dmitry Seloustev on 11.06.2024.
 //
 
-enum ErrorCodes {
+enum ErrorCodes : String {
     case GeolocatorErrorLocationUpdateFailure
     case GeolocatorErrorLocationServicesDisabled
     case GeolocatorErrorLocationSubscriptionActive

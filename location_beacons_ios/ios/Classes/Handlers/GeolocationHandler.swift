@@ -62,7 +62,7 @@ class GeolocationHandler: NSObject, CLLocationManagerDelegate {
         
         currentLocationResultHandler = nil
         if (!isListeningForPositionUpdates) {
-            stopMonitoring()
+            stopListening()
         }
     }
     
@@ -87,7 +87,7 @@ class GeolocationHandler: NSObject, CLLocationManagerDelegate {
         
         currentLocationResultHandler = nil
         if (!isListeningForPositionUpdates) {
-            stopMonitoring()
+            stopListening()
         }
     }
     
@@ -99,13 +99,13 @@ class GeolocationHandler: NSObject, CLLocationManagerDelegate {
         startMonitoring(pauseLocationUpdatesAutomatically: pauseLocationUpdatesAutomatically, activityType: activityType, isListeningForPositionUpdates: true, showBackgroundLocationIndicator: showBackgroundLocationIndicator, allowBackgroundLocationUpdates: allowBackgroundLocationUpdates)
     }
     
-    private func stopMonitoring() {
+    func stopListening() {
         locationManager.stopMonitoringSignificantLocationChanges()
         isListeningForPositionUpdates = false
         errorHandler = nil
         listenerResultHandler = nil
     }
-    
+        
     private func startMonitoring(pauseLocationUpdatesAutomatically: Bool, activityType: CLActivityType, isListeningForPositionUpdates: Bool,
                                  showBackgroundLocationIndicator: Bool, allowBackgroundLocationUpdates: Bool) {
         self.isListeningForPositionUpdates = isListeningForPositionUpdates

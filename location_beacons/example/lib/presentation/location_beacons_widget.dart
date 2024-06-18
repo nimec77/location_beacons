@@ -71,7 +71,7 @@ class _LocationBeaconsWidgetState extends State<LocationBeaconsWidget> {
                 } else {
                   return Card(
                     child: ListTile(
-                      textColor: themeMaterialColor,
+                      tileColor: themeMaterialColor,
                       title: Text(
                         positionItem.displayValue,
                         style: const TextStyle(color: Colors.white),
@@ -91,6 +91,9 @@ class _LocationBeaconsWidgetState extends State<LocationBeaconsWidget> {
   }
 
   void _onLog(PositionItemType type, String displayValue) {
+    if (!mounted) {
+      return;
+    }
     final positionItem = PositionItem(type, displayValue);
     setState(() {
       _positionItems.add(positionItem);

@@ -56,7 +56,7 @@ class LocationBeaconsRepository {
 
     onLog(PositionItemType.log, permissionGrantedMessage);
 
-    return false;
+    return true;
   }
 
   void toggleServiceStatusStream() {
@@ -97,7 +97,6 @@ class LocationBeaconsRepository {
         onLog(PositionItemType.position, position.toString());
       });
       _positionStreamSubscription?.pause();
-      return;
     }
 
     final String statusDisplayValue;
@@ -116,8 +115,9 @@ class LocationBeaconsRepository {
     if (!hasPermission) {
       return;
     }
-    final position = await LocationBeacons.getCurrentPosition();
-    onLog(PositionItemType.position, position.toString());
+    LocationBeacons.getCurrentPosition().then((position) {
+      onLog(PositionItemType.position, position.toString());
+    }).ignore();
   }
 
   Future<void> getLastKnownPosition() async {

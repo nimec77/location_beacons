@@ -7,7 +7,8 @@ import 'package:location_beacons_platform_interface/location_beacons_platform_in
 final class LocationBeaconsIOS extends LocationBeaconsPlatform {
   static const _methodChannel = MethodChannel('location_beacons_ios');
 
-  static const _eventChannel = EventChannel('location_beacons_ios/position_updates');
+  static const _eventChannel =
+      EventChannel('location_beacons_ios/position_updates');
 
   final _geolocatorApple = GeolocatorApple();
 
