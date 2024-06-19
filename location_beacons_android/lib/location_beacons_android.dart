@@ -9,7 +9,6 @@ final class LocationBeaconsAndroid extends LocationBeaconsPlatform {
     LocationBeaconsPlatform.instance = LocationBeaconsAndroid();
   }
 
-  @override
   Future<String?> getPlatformVersion() async {
     final String? version = await _channel.invokeMethod('getPlatformVersion');
     return version;

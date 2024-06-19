@@ -5,7 +5,7 @@ abstract base class LocationBeaconsPlatform extends PlatformInterface {
   /// Constructs a LocationBeaconsPlatform.
   LocationBeaconsPlatform() : super(token: _token);
 
-  static final Object _token = Object();
+  static final _token = Object();
 
   static LocationBeaconsPlatform _instance = _PlaceholderImplementation();
 
@@ -18,7 +18,7 @@ abstract base class LocationBeaconsPlatform extends PlatformInterface {
   /// platform-specific class that extends [LocationBeaconsPlatform] when
   /// they register themselves.
   static set instance(LocationBeaconsPlatform instance) {
-    PlatformInterface.verifyToken(instance, _token);
+    PlatformInterface.verify(instance, _token);
     _instance = instance;
   }
 

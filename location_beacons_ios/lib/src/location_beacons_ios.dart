@@ -109,6 +109,9 @@ final class LocationBeaconsIOS extends LocationBeaconsPlatform {
   Stream<Position> getPositionStream({
     LocationSettings? locationSettings,
   }) {
+    if (_positionStream != null) {
+      return _positionStream!;
+    }
     final originalStream = _eventChannel.receiveBroadcastStream(
       locationSettings?.toJson(),
     );
@@ -138,8 +141,8 @@ final class LocationBeaconsIOS extends LocationBeaconsPlatform {
       (error) {
         if (error is PlatformException) {
           error = _handlePlatformException(error);
-          throw error;
         }
+        throw error;
       },
     );
     return _positionStream!;
