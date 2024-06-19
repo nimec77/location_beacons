@@ -67,16 +67,14 @@ class PositionStreamHandler: NSObject, FlutterStreamHandler {
     }
     
     private func onLocationDidChange(location: CLLocation?) {
-        if (eventSink == nil) {
-            return
-        }
-        eventSink!(location?.toDictionary)
+        guard let eventSink = eventSink else { return }
+        
+        eventSink(location?.toDictionary)
     }
     
     private func onLocationFailureWithErrorCode(errorCode: ErrorCodes, errorDescription: String) {
-        if (eventSink == nil) {
-            return
-        }
-        eventSink!(FlutterError(code: errorCode.rawValue, message: errorDescription, details: nil))
+        guard let eventSink = eventSink else { return }
+        
+        eventSink(FlutterError(code: errorCode.rawValue, message: errorDescription, details: nil))
     }
 }
