@@ -22,6 +22,10 @@ abstract base class LocationBeaconsPlatform extends PlatformInterface {
     _instance = instance;
   }
 
+  Future<void> init(String apiKey) {
+    throw UnimplementedError('init() has not been implemented.');
+  }
+
   Future<LocationPermission> checkPermission() {
     throw UnimplementedError('checkPermission() has not been implemented.');
   }

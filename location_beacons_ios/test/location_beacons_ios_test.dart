@@ -34,6 +34,23 @@ void main() {
 
     tearDown(log.clear);
 
+    group('init: When initializing the plugin', () {
+      test('Should doing nothing', () async {
+        // Arrange
+        final channel = MethodChannelMock(
+          channelName: 'location_beacons_ios',
+          method: 'init',
+          result: null,
+        );
+
+        // Act
+        await LocationBeaconsIOS().init('API_KEY');
+
+        // Assert
+        expect(channel.log.isEmpty, true);
+      });
+    });
+
     group('checkPermission: When checking for permission', () {
       test(
           // ignore: lines_longer_than_80_chars

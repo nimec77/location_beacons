@@ -10,6 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  geolocator_android: ^4.6.0
   location_beacons_platform_interface:
     path: ../location_beacons_platform_interface
 
