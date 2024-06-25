@@ -25,7 +25,7 @@ class CellPosition extends Position {
   bool get isSuccess => status == 'success';
 
   factory CellPosition.fromMap(dynamic message) {
-    final positionMap = message as Map<String, dynamic>;
+    final positionMap = message.cast<String, dynamic>();
 
     final position = Position.fromMap(positionMap);
 
@@ -44,5 +44,15 @@ class CellPosition extends Position {
       speed: position.speed,
       speedAccuracy: position.speedAccuracy,
     );
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return super.toJson()
+      ..addAll({
+        'status': status,
+        'message': message,
+        'address': address,
+      });
   }
 }
