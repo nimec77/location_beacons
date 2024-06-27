@@ -1,4 +1,4 @@
-package ru.elocont.location_beacons.location_beacons
+package ru.elocont.location_beacons.location_beacons.handlers
 
 import android.content.Context
 import android.util.Log
@@ -19,6 +19,7 @@ class MethodCallHandlerImpl : MethodChannel.MethodCallHandler, LocationBeaconsHa
         if (call.method == "init") {
             setApiToken(call, result)
         } else {
+            Log.e(TAG, "Unknown method call: " + call.method)
             result.notImplemented()
         }
     }

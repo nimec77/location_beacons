@@ -1,4 +1,4 @@
-package ru.elocont.location_beacons.location_beacons.service
+package ru.elocont.location_beacons.location_beacons.services
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

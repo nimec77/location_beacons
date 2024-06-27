@@ -1,8 +1,8 @@
-package ru.elocont.location_beacons.location_beacons.model.response
+package ru.elocont.location_beacons.location_beacons.models.response
 
 import com.squareup.moshi.Json
 
-data class CellLocation (
+data class CellLocation(
     val status: String,
     val message: String?,
     val accuracy: Int?,
@@ -15,4 +15,14 @@ data class CellLocation (
     val longitude: Double? = null
 ) {
     fun isSuccess() = status == "ok"
+
+    fun toMap(): Map<String, Any?> =
+        mapOf(
+            "status" to status,
+            "message" to message,
+            "accuracy" to accuracy,
+            "address" to address,
+            "latitude" to latitude,
+            "longitude" to longitude
+        )
 }

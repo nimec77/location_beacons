@@ -1,10 +1,10 @@
-package ru.elocont.location_beacons.location_beacons.service
+package ru.elocont.location_beacons.location_beacons.services
 
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
-import ru.elocont.location_beacons.location_beacons.model.request.CellInfo
-import ru.elocont.location_beacons.location_beacons.model.response.CellLocation
+import ru.elocont.location_beacons.location_beacons.models.request.CellInfo
+import ru.elocont.location_beacons.location_beacons.models.response.CellLocation
 
 interface UnwiredLabsService {
     @POST("v2/process.php")

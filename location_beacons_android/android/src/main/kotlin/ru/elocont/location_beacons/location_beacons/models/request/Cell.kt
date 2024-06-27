@@ -1,4 +1,4 @@
-package ru.elocont.location_beacons.location_beacons.model.request
+package ru.elocont.location_beacons.location_beacons.models.request
 
 data class Cell(
     val lac: Int,
