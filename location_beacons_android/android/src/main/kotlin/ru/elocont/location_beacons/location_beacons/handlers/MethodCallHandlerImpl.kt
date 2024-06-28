@@ -2,6 +2,7 @@ package ru.elocont.location_beacons.location_beacons.handlers
 
 import android.content.Context
 import android.util.Log
+import android.util.Printer
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -10,17 +11,25 @@ import io.flutter.plugin.common.MethodChannel.Result
 import ru.elocont.location_beacons.location_beacons.interfaces.LocationBeaconsHandler
 import ru.elocont.location_beacons.location_beacons.objects.LocationBeaconsObject
 
-class MethodCallHandlerImpl : MethodChannel.MethodCallHandler, LocationBeaconsHandler {
+class MethodCallHandlerImpl(
+    private val locationHandler: LocationHandler,
+    private val locationServiceHandler: LocationServiceHandlerImpl
+) : MethodChannel.MethodCallHandler, LocationBeaconsHandler {
     private var channel: MethodChannel? = null
     private var context: Context? = null
-    private var apiKey: String? = null
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
-        if (call.method == "init") {
-            setApiToken(call, result)
-        } else {
-            Log.e(TAG, "Unknown method call: " + call.method)
-            result.notImplemented()
+        when (call.method) {
+            "getLastKnownPosition" -> {
+                onGetLastKnownPosition(call, result)
+            }
+            "isLocationServiceEnabled" -> {
+                onIsLocationServiceEnabled(call, result)
+            }
+            else -> {
+                Log.e(TAG, "Unknown method call: " + call.method)
+                result.notImplemented()
+            }
         }
     }
 
@@ -45,9 +54,12 @@ class MethodCallHandlerImpl : MethodChannel.MethodCallHandler, LocationBeaconsHa
         channel = null
     }
 
-    fun setApiToken(call: MethodCall, result: Result) {
-        apiKey = call.argument("apiKey")
-        result.success(null)
+   private  fun onGetLastKnownPosition(call: MethodCall, result: MethodChannel.Result) {
+        locationHandler.onGetLastKnownPosition(call, result)
+    }
+
+    private fun onIsLocationServiceEnabled(call: MethodCall, result: MethodChannel.Result) {
+        locationServiceHandler.isLocationServiceEnabled(call, result)
     }
 
     companion object {

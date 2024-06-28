@@ -1,10 +1,12 @@
 package ru.elocont.location_beacons.location_beacons.models.request
 
+import ru.elocont.location_beacons.location_beacons.BuildConfig
+
 data class CellInfo(
-    val token: String,
+    val token: String = BuildConfig.OPENCELLID_API_KEY,
     val radio: String,
-    var mcc: Int? = null,
-    var mnc: Int? = null,
-    var cells: List<Cell> = emptyList(),
-    var address: Int = 1
+    val mcc: Int,
+    val mnc: Int,
+    val cells: List<Cell> = emptyList(),
+    val address: Int = 1
 )

@@ -19,11 +19,6 @@ final class LocationBeaconsIOS extends LocationBeaconsPlatform {
   }
 
   @override
-  Future<void> init(String apiKey) async {
-    // No need to initialize anything on iOS
-  }
-
-  @override
   Future<LocationPermission> checkPermission() {
     return _geolocatorApple.checkPermission();
   }

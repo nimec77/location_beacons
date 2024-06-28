@@ -24,17 +24,6 @@ final class LocationBeaconsAndroid extends LocationBeaconsPlatform {
   }
 
   @override
-  Future<void> init(String apiKey) async {
-    try {
-      await _channel.invokeMethod('init', apiKey);
-    } on PlatformException catch (e) {
-      final error = _handlePlatformException(e);
-
-      throw error;
-    }
-  }
-
-  @override
   Future<LocationPermission> checkPermission() {
     return _geolocatorAndroid.checkPermission();
   }

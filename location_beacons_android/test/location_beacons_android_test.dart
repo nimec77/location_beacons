@@ -37,24 +37,6 @@ void main() {
 
     tearDown(log.clear);
 
-    group('init: Setting API_KEY for https://opencellid.org/', () {
-      const apiKey = 'API_KEY';
-      test('Should set the API_KEY', () async {
-        final channel = MethodChannelMock(
-          channelName: 'location_beacons_android',
-          methods: [
-            const MethodMock(methodName: 'init'),
-          ],
-        );
-
-        await LocationBeaconsAndroid().init(apiKey);
-
-        expect(channel.log, <Matcher>[
-          isMethodCall('init', arguments: apiKey),
-        ]);
-      });
-    });
-
     group('checkPermission: When checking for permission', () {
       test(
           // ignore: lines_longer_than_80_chars

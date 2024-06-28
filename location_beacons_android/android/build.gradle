@@ -26,7 +26,17 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
+Properties credentialProperty = new Properties()
+File credentialFile = rootProject.file("credentials.properties")
+InputStream ins = new FileInputStream(credentialFile)
+credentialProperty.load(ins)
+ins.close()
+
 android {
+    buildFeatures {
+        buildConfig  true
+    }
+
     if (project.android.hasProperty("namespace")) {
         namespace 'ru.elocont.location_beacons.location_beacons'
     }
@@ -49,6 +59,8 @@ android {
 
     defaultConfig {
         minSdkVersion 23
+        buildConfigField 'String', 'OPENCELLID_API_KEY', "${credentialProperty['OPENCELLID_API_KEY']}"
+
     }
 
     dependencies {
@@ -67,9 +79,9 @@ android {
             useJUnitPlatform()
 
             testLogging {
-               events "passed", "skipped", "failed", "standardOut", "standardError"
-               outputs.upToDateWhen {false}
-               showStandardStreams = true
+                events "passed", "skipped", "failed", "standardOut", "standardError"
+                outputs.upToDateWhen { false }
+                showStandardStreams = true
             }
         }
     }
