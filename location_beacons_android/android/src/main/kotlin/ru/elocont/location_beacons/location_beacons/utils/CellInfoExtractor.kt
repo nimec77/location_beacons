@@ -12,21 +12,21 @@ import ru.elocont.location_beacons.location_beacons.models.request.CellInfo
 import ru.elocont.location_beacons.location_beacons.models.request.RadioType
 
 @SuppressLint("MissingPermission")
-fun getCurrentCellInfo(context: Context, apiKey: String): List<CellInfo> {
+fun getCurrentCellInfo(context: Context): List<CellInfo> {
     val telephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
     val accCellInfo = telephonyManager.allCellInfo
 
     return accCellInfo.mapNotNull { info ->
         when (info) {
-            is CellInfoGsm -> getCellInfo(info, apiKey)
-            is CellInfoWcdma -> getCellInfo(info, apiKey)
-            is CellInfoLte -> getCellInfo(info, apiKey)
+            is CellInfoGsm -> getCellInfo(info)
+            is CellInfoWcdma -> getCellInfo(info)
+            is CellInfoLte -> getCellInfo(info)
             else -> null
         }
     }
 }
 
-fun getCellInfo(info: CellInfoGsm, apiKey: String): CellInfo {
+fun getCellInfo(info: CellInfoGsm): CellInfo {
     val cellInfo: CellInfo
 
     info.cellIdentity.let {
@@ -36,7 +36,6 @@ fun getCellInfo(info: CellInfoGsm, apiKey: String): CellInfo {
             Pair(it.mcc, it.mnc)
         }
         cellInfo = CellInfo(
-            token = apiKey,
             radio = RadioType.GSM,
             mcc = mcc,
             mnc = mnc,
@@ -47,7 +46,7 @@ fun getCellInfo(info: CellInfoGsm, apiKey: String): CellInfo {
     return cellInfo
 }
 
-fun getCellInfo(info: CellInfoWcdma, apiKey: String): CellInfo {
+fun getCellInfo(info: CellInfoWcdma): CellInfo {
     val cellInfo: CellInfo
 
     info.cellIdentity.let {
@@ -57,7 +56,6 @@ fun getCellInfo(info: CellInfoWcdma, apiKey: String): CellInfo {
             Pair(it.mcc, it.mnc)
         }
         cellInfo = CellInfo(
-            token = apiKey,
             radio = RadioType.UMTS,
             mcc = mcc,
             mnc = mnc,
@@ -68,7 +66,7 @@ fun getCellInfo(info: CellInfoWcdma, apiKey: String): CellInfo {
     return cellInfo
 }
 
-fun getCellInfo(info: CellInfoLte, apiKey: String): CellInfo {
+fun getCellInfo(info: CellInfoLte): CellInfo {
     val cellInfo: CellInfo
 
     info.cellIdentity.let {
@@ -78,7 +76,6 @@ fun getCellInfo(info: CellInfoLte, apiKey: String): CellInfo {
             Pair(it.mcc, it.mnc)
         }
         cellInfo = CellInfo(
-            token = apiKey,
             radio = RadioType.LTE,
             mcc = mcc,
             mnc = mnc,

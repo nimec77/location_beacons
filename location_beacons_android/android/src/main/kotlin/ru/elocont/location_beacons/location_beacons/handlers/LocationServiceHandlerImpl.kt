@@ -22,7 +22,7 @@ class LocationServiceHandlerImpl : LocationBeaconsHandler, EventChannel.StreamHa
             stopListening()
         }
 
-        channel = EventChannel(messenger, LocationBeaconsObject.EVENT_CHANNEL_NAME)
+        channel = EventChannel(messenger, LocationBeaconsObject.SERVICE_STATUS_CHANNEL_NAME)
         channel?.setStreamHandler(this)
         this.context = context
     }
@@ -35,6 +35,7 @@ class LocationServiceHandlerImpl : LocationBeaconsHandler, EventChannel.StreamHa
 
         channel?.setStreamHandler(null)
         channel = null
+        context = null
     }
 
     override fun onListen(arguments: Any?, events: EventChannel.EventSink) {

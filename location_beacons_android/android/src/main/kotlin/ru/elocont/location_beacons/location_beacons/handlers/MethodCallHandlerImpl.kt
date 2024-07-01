@@ -26,6 +26,9 @@ class MethodCallHandlerImpl(
             "isLocationServiceEnabled" -> {
                 onIsLocationServiceEnabled(call, result)
             }
+            "getCurrentPosition" -> {
+                onGetCurrentPosition(call, result)
+            }
             else -> {
                 Log.e(TAG, "Unknown method call: " + call.method)
                 result.notImplemented()
@@ -52,6 +55,7 @@ class MethodCallHandlerImpl(
 
         channel?.setMethodCallHandler(null)
         channel = null
+        context = null
     }
 
    private  fun onGetLastKnownPosition(call: MethodCall, result: MethodChannel.Result) {
@@ -60,6 +64,10 @@ class MethodCallHandlerImpl(
 
     private fun onIsLocationServiceEnabled(call: MethodCall, result: MethodChannel.Result) {
         locationServiceHandler.isLocationServiceEnabled(call, result)
+    }
+
+    private fun onGetCurrentPosition(call: MethodCall, result: MethodChannel.Result) {
+        locationHandler.onGetCurrentPosition(call, result)
     }
 
     companion object {
