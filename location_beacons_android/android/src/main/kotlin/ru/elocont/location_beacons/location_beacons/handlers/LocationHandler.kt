@@ -10,14 +10,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import ru.elocont.location_beacons.location_beacons.errors.ErrorCodes
 import ru.elocont.location_beacons.location_beacons.interfaces.LocationBeaconsHandler
 import ru.elocont.location_beacons.location_beacons.repositories.LocationRepository
 import ru.elocont.location_beacons.location_beacons.types.FetchLocationStatus
-import ru.elocont.location_beacons.location_beacons.utils.getCurrentCellInfo
 
 class LocationHandler(private val locationRepository: LocationRepository) :
     LocationBeaconsHandler {
@@ -40,13 +37,13 @@ class LocationHandler(private val locationRepository: LocationRepository) :
     }
 
     fun onGetLastKnownPosition(call: MethodCall, result: MethodChannel.Result) {
-        result.success(locationRepository.lastCellLocation?.toMap())
+        result.success(locationRepository.getLastKnownPosition()?.toMap())
     }
 
     fun onGetCurrentPosition(call: MethodCall, result: MethodChannel.Result) {
         job?.cancel()
         job = locationScope.launch {
-            fetchLocation()
+            locationRepository.fetchLocation(context)
                 .catch {
                     it.printStackTrace()
                     result.error(
@@ -72,20 +69,4 @@ class LocationHandler(private val locationRepository: LocationRepository) :
                 }
         }
     }
-
-    private suspend fun fetchLocation() = flow {
-        if (context == null) {
-            throw IllegalStateException("Context is null")
-        }
-        val allCellInfo = getCurrentCellInfo(context!!)
-        if (allCellInfo.isNotEmpty()) {
-            val cellLocation = withContext(Dispatchers.IO) {
-                locationRepository.getLocationByCellInfo(allCellInfo.first())
-            }
-            emit(cellLocation)
-        } else {
-            emit(null)
-        }
-    }
-
 }
