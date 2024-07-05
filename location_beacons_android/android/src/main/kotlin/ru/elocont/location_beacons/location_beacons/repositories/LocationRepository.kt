@@ -14,7 +14,7 @@ class LocationRepository(private val locationProvider: LocationProvider) {
 
     fun getLastKnownPosition(): CellLocation? = locationProvider.lastCellLocation
 
-    suspend fun fetchLocation(context: Context?, interval: Duration = Duration.ZERO) = flow {
+    suspend fun fetchLocations(context: Context?, interval: Duration = Duration.ZERO) = flow {
         if (context == null) {
             throw IllegalStateException("Context can't be null")
         }

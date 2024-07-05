@@ -15,6 +15,7 @@ import ru.elocont.location_beacons.location_beacons.errors.ErrorCodes
 import ru.elocont.location_beacons.location_beacons.interfaces.LocationBeaconsHandler
 import ru.elocont.location_beacons.location_beacons.repositories.LocationRepository
 import ru.elocont.location_beacons.location_beacons.types.FetchLocationStatus
+import kotlin.time.Duration
 
 class LocationHandler(private val locationRepository: LocationRepository) :
     LocationBeaconsHandler {
@@ -43,7 +44,7 @@ class LocationHandler(private val locationRepository: LocationRepository) :
     fun onGetCurrentPosition(call: MethodCall, result: MethodChannel.Result) {
         job?.cancel()
         job = locationScope.launch {
-            locationRepository.fetchLocation(context)
+            locationRepository.fetchLocations(context, Duration.ZERO)
                 .catch {
                     it.printStackTrace()
                     result.error(

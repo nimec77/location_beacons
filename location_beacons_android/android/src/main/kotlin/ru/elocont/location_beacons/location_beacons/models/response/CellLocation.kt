@@ -3,9 +3,13 @@ package ru.elocont.location_beacons.location_beacons.models.response
 import com.squareup.moshi.Json
 
 data class CellLocation(
+    @Json(name = "status")
     val status: String,
+    @Json(name = "message")
     val message: String?,
+    @Json(name = "accuracy")
     val accuracy: Double?,
+    @Json(name = "address")
     val address: String?,
 
     @Json(name = "lat")
